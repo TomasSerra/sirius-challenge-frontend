@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { IoSearch } from "react-icons/io5";
-import styles from './SearchBar.module.scss';
+import React, { useState } from 'react';
+import { IoSearch } from 'react-icons/io5';
+import styles from './Searchbar.module.scss';
 
 type SearchBarProps = {
     width?: string;
