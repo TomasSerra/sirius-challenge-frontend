@@ -2,7 +2,7 @@ import { SvgComponentProps } from "./IconProps";
 
 
 const NintendoIcon = ({ color = "#FFF", ...props }: SvgComponentProps) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 16" {...props}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 16" width='21px' height='16px' {...props}>
     <path
       fill={color}
       fillRule="evenodd"
