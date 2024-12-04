@@ -1,7 +1,7 @@
-@import '../../../../colors.scss';
+@use '../../../../colors.scss';
 
 .container{
-    background-color: $neutral-700;
+    background-color: colors.$neutral-700;
     display: flex;
     align-items: center;
     padding: 8px;
@@ -27,6 +27,6 @@
     }
 
     &:hover{
-        background-color: $neutral-500;
+        background-color: colors.$neutral-500;
     }
 }

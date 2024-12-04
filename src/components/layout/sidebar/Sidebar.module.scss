@@ -1,7 +1,7 @@
-@import '../../../colors.scss';
+@use '../../../colors.scss';
 
 .sidebar-container{
-    background-color: $neutral-800;
+    background-color: colors.$neutral-800;
     width: 260px;
     height: 80dvh;
     border-radius: 20px;
@@ -18,8 +18,8 @@
         gap: 10px;
         justify-content: start;
         align-items: start;
-        overflow-y: scroll;
         padding-right: 10px;
+        overflow: auto;
 
         &::-webkit-scrollbar-track {
             background-color: #333;
