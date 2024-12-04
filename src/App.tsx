@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import styles from "./App.module.scss";
 
 const App = () => {
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", margin: "0", padding: "0" }}>
-      <main style={{ padding: "20px" }}>
+    <div className={styles["app-container"]}>
+      <main>
         <Outlet />
       </main>
     </div>
