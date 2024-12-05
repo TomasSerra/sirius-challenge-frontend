@@ -4,20 +4,28 @@ import PlatformsList from '../../icons/platforms/PlatformsList';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Platform } from '@/types/platforms';
+import { useNavigate } from "react-router-dom";
 
 type GameCardProps = {
-  imageUrl?: string;
-  name?: string;
-  rating?: number;
-  platforms?: Platform[];
-  genres?: string[];
-  releaseDate?: string;
+  id: string;
+  imageUrl: string;
+  name: string;
+  rating: number;
+  platforms: Platform[];
+  genres: string[];
+  releaseDate: string;
   onClick?: () => void;
 }
 
-const GameCard = ({imageUrl, name, rating, platforms, genres, releaseDate, onClick=()=>{}}: GameCardProps) => {
+const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: GameCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+      navigate(`/game/${id}`);
+  }
+
   return (
-    <div className={styles["game-card"]} onClick={onClick}>
+    <div className={styles["game-card"]} onClick={handleClick}>
       
       <div className={styles["image-container"]}>
         {imageUrl ? 

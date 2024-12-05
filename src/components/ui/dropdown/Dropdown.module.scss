@@ -1,0 +1,9 @@
+@use '../../../colors.scss';
+
+.dropdown{
+    background: colors.$neutral-800 !important;
+    border: none !important;
+    color: #fff;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+}

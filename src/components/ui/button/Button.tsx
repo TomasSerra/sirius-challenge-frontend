@@ -4,12 +4,21 @@ type ButtonProps = {
     text: string;
     width?: string;
     onClick?: () => void;
-}
+    isFilled?: boolean;
+    icon?: React.ReactNode;
+};
 
-const Button = ({text, width='100%', onClick=()=>{}}: ButtonProps) => {
+const Button = ({ text, width = '100%', onClick = () => {}, isFilled = true, icon }: ButtonProps) => {
     return (
-        <button style={{width: width}} onClick={onClick} className={styles.button}>{text}</button>
-    )
-}
+        <button
+            style={{ width }}
+            onClick={onClick}
+            className={`${styles.button} ${isFilled ? styles.filled : styles['no-filled']}`}
+        >
+            {text}
+            {icon && <span className={styles.icon}>{icon}</span>}
+        </button>
+    );
+};
 
-export default Button
+export default Button;

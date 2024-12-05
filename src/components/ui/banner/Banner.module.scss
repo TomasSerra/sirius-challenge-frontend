@@ -8,7 +8,6 @@
     padding: 20px;
     background-position: center;
     background-size: cover;
-    background-image: url('https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Buzzy-Bees_1280x768.jpg');
     border-radius: 20px;
     box-sizing: border-box;
 
@@ -39,8 +38,8 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
-                -webkit-line-clamp: 4;
-                line-clamp: 4;
+                -webkit-line-clamp: 6;
+                line-clamp: 6;
                 -webkit-box-orient: vertical;
                 margin: 0;
                 font-size: 14px;
@@ -58,5 +57,17 @@
                 font-size: 14px;
             }
         }
+    }
+}
+
+@keyframes zoomImage {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }
