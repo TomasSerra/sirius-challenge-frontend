@@ -1,0 +1,13 @@
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    white-space: pre-line;
+
+    .description{
+        font-size: 0.9em;
+        opacity: 0.9;
+        line-height: 25px;
+    }
+}

@@ -1,8 +1,11 @@
 import React from 'react'
 import PlatformIcon from './Platform';
+import { Platform } from '@/types/platforms';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 type PlatformsListProps = {
-    platforms: string[];
+    platforms: Platform[] | undefined ;
 }
 
 const PlatformsList = ({platforms}: PlatformsListProps) => {
@@ -15,9 +18,20 @@ const PlatformsList = ({platforms}: PlatformsListProps) => {
             alignItems: 'center',
         }
     }>
-        {platforms.map((platform, index) => (
+      { platforms && platforms.length > 0 ?
+      <>
+        {platforms?.map((platform, index) => (
           <PlatformIcon key={index} icon={platform} color="white"/>
         ))}
+      </>
+        :
+      <>
+        <Skeleton width={20} height={20} circle={true}/>
+        <Skeleton width={20} height={20} circle={true}/>
+        <Skeleton width={20} height={20} circle={true}/>
+        <Skeleton width={20} height={20} circle={true}/>
+      </>
+      }
     </div>
         
   )

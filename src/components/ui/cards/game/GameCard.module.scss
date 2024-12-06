@@ -43,6 +43,23 @@
             object-position: center;
             transition: transform 0.5s;
         }
+
+        .button-container{
+            position: absolute;
+            padding: 5px;
+            bottom: 10px;
+            right: 10px;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.438);
+            border-radius: 50%;
+
+            &:hover{
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+        }
     }
 
     .game-card-info{

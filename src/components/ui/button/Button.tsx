@@ -3,7 +3,7 @@ import styles from './Button.module.scss';
 type ButtonProps = {
     text: string;
     width?: string;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     isFilled?: boolean;
     icon?: React.ReactNode;
 };
