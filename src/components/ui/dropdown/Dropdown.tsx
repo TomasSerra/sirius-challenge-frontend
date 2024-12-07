@@ -2,11 +2,12 @@ import React from 'react'
 import Select from 'react-dropdown-select';
 import styles from './Dropdown.module.scss';
 import './Dropdown.custom.scss';
+import { Ordering } from '@/types/ordering';
 
 type DropdownProps = {
-    options: { value: string, label: string }[];
-    onChange?: (values: { value: string, label: string }[]) => void;
-    initialValue?: { value: string, label: string };
+    options: { value: Ordering, label: string }[];
+    onChange?: (values: { value: Ordering, label: string }[]) => void;
+    initialValue?: { value: Ordering, label: string };
 }
 
 const Dropdown = ({options, onChange = ()=>{}, initialValue}: DropdownProps) => {

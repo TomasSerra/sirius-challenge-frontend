@@ -7,39 +7,67 @@ import { Platform } from '@/types/platforms';
 import { useNavigate } from "react-router-dom";
 import { getGameInfo } from '@/services/GlobalApi';
 import { TbBrowserShare } from "react-icons/tb";
+import { Tooltip } from 'react-tooltip'
+import { useState } from 'react';
+import { BeatLoader } from 'react-spinners';
+import LazyImage from '@/components/utils/images/optimizer/LazyImage';
 
 
 type GameCardProps = {
-  id: string;
+  id: number;
   imageUrl: string;
   name: string;
-  rating: number;
+  rating?: number;
   platforms: Platform[];
-  genres: string[];
+  genres?: string[];
   releaseDate: string;
   onClick?: () => void;
 }
 
 const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: GameCardProps) => {
   const navigate = useNavigate();
-
-  //const [websiteUrl, setWebsiteUrl] = useState<string | null>(null);
+  const [loadingWebsite, setLoadingWebsite] = useState(false);
 
   const handleClick = () => {
     navigate(`/game/${id}`);
   }
 
-  const handleTrailerClick = async (e: any) => {
+  const handleWebsiteClick = async (e: any) => {
     e.stopPropagation();
-    getGameInfo(parseInt(id)).then((response) => {
-      //setWebsiteUrl(response.data.website);
+    setLoadingWebsite(true);
+    getGameInfo(id).then((response) => {
+      console.log(response);
       if(response.data.website){
         window.open(response.data.website, "_blank");
       }
+      setLoadingWebsite(false);
     }).catch((error) => {
-      console.error("Error fetching game trailer:", error);
+      console.error("Error fetching game website:", error);
+      setLoadingWebsite(false);
     });
   }
+
+  const WebsiteButton = () => {
+    return (
+      <>
+        <div className={styles["button-container"]} onClick={(e)=>{handleWebsiteClick(e)}} data-tooltip-id={"website-tooltip-"+id} data-tooltip-content="Game Website">
+          { !loadingWebsite ?
+            <TbBrowserShare size={25}/>
+            :
+            <span style={{width: '25px', height: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <BeatLoader
+                color="#ffffff"
+                size={3}
+              />
+            </span>
+            
+          }
+        </div>
+        <Tooltip id={"website-tooltip-"+id} />
+      </>
+    )
+  }
+      
 
 
   return (
@@ -48,14 +76,13 @@ const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: 
       <div className={styles["image-container"]}>
         {imageUrl ? 
         <>
-          <div className={styles["rating-container"]}>
-            <Rating rating={rating}/>
-          </div>
-          <img src={imageUrl} alt={'card image ' + name} draggable={false}/>
-          <div className={styles["button-container"]} onClick={(e)=>{handleTrailerClick(e)}}>
-            <TbBrowserShare size={25}/>
-          </div>
-          
+          { rating &&
+            <div className={styles["rating-container"]}>
+              <Rating rating={rating}/>
+            </div>
+          }
+          <LazyImage src={imageUrl} alt={'card image ' + name} className={styles.image}/>
+          <WebsiteButton/>
         </>
         :
         <Skeleton height={150} width={260}/>
@@ -74,11 +101,8 @@ const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: 
           <Skeleton width={220} height={30}/>
           }
 
-          { genres && genres!.length > 0 ?
-          <p className={styles.genres}>{genres!.join(', ')}</p>
-          :
-          <Skeleton width={200} height={15} style={{marginTop: '5px'}}/>
-          }
+          { genres && genres!.length > 0 &&
+          <p className={styles.genres}>{genres!.join(', ')}</p>}
         </div>
         { releaseDate ?
         <p className={styles.date}><b>Release Date:</b> {releaseDate}</p>

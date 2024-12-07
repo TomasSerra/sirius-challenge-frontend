@@ -23,7 +23,6 @@
             position: relative;
 
             .banner{
-                max-width: 800px;
                 width: 100%;
                 height: 100%;
                 background-position: center;
@@ -50,6 +49,8 @@
         padding: 24px;
         height: fit-content;
         box-sizing: border-box;
+        position: sticky;
+        top: 120px;
 
         .details {
             width: 100%;

@@ -15,7 +15,6 @@ const Home = () => {
           <h1>All Games</h1>
           <GameCardsPaginate/>
         </section>
-        
       </div>
     </>
   )

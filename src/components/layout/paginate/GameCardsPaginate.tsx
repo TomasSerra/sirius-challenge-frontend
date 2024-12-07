@@ -5,44 +5,57 @@ import GameCard from '@/components/ui/cards/game/GameCard';
 import Button from '@/components/ui/button/Button';
 import Dropdown from '@/components/ui/dropdown/Dropdown';
 import { CiFilter } from 'react-icons/ci';
+import { getGameCardsInfo } from '@/utils/DataMapper';
+import { GameCardInfo } from '@/types/gameCardInfo';
+import { Ordering } from '@/types/ordering';
+import { GameFilters } from '@/types/filters';
 
-const OrderByOptions = [
-    { value: 'rating', label: 'Rating 🠕' },
-    { value: '-rating', label: 'Rating 🠗' },
-    { value: 'released', label: 'Release Date 🠕' },
+type OrderByOption = { value: Ordering, label: string };
+
+const OrderByOptions: OrderByOption[] = [
+    { value: '', label: 'Trending' },
+    { value: '-metacritic', label: 'Metacritic 🠗' },
+    { value: 'metacritic', label: 'Metacritic 🠕' },
     { value: '-released', label: 'Release Date 🠗' },
-    { value: 'name', label: 'Name (A-Z)' },
-    { value: '-name', label: 'Name (Z-A)' },
+    { value: 'released', label: 'Release Date 🠕' },
+    { value: '-name', label: 'Name (A-Z)' },
+    { value: 'name', label: 'Name (Z-A)' },
 ];
 
 const GameCardsPaginate = () => {
-    const pageSize = 10;
-    const [totalGames, setTotalGames] = useState(0);
-    const [totalPages, setTotalPages] = useState(20);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentGames, setCurrentGames] = useState([]);
+    const gamesPerPage = 10;
+    const [filters, setFilters] = useState<GameFilters>();
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentGames, setCurrentGames] = useState<GameCardInfo[]>([]);
   
     const handlePageClick = (event: { selected: number }) => {
         const newPage: number = event.selected + 1;
-        setCurrentPage(newPage);
-        alert('new page ' + newPage);
+        fetchGames(newPage);
     };
+
+    const fetchGames = async (page: number) => {
+        getGameCardsInfo(page, filters).then((response) => {
+            setCurrentGames(response.games);
+            setTotalPages(Math.max(response.total / gamesPerPage));
+        }
+        ).catch((error) => {
+            console.error("Error fetching game cards info:", error);
+        });
+    }
   
     return (
       <div>
         <div className={styles["filter-buttons-container"]}>
-            <Dropdown options={OrderByOptions}/>
-            <Button text='Filter' width='100px' isFilled={false} icon={<CiFilter/>}/>
+            <Dropdown options={OrderByOptions} onChange={(values) => {setFilters({...filters, ordering: values[0].value})}}/>
+            <Button text='Filter' width='100px' isFilled={false} icon={<CiFilter/>} onClick={()=>{fetchGames(1)}}/>
         </div>
         <div className={styles["games-container"]}>
-            <GameCard id="1030" name="Grand Therf Auto: V" imageUrl="https://www.nobbot.com/wp-content/uploads/2021/10/gta-5-requisitos.jpg" rating={87} platforms={["playstation", "xbox", "pc", "mac"]} genres={["Action", "Open World", "RPG"]} releaseDate="Sep, 2016"/>
-            <GameCard id="2" name="Cyberpunk 2077" imageUrl="https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/bxSj4jO0KBqUgAbH3zuNjCje.jpg" rating={70} platforms={["playstation", "xbox", "pc", "mac"]} genres={["Action", "Adventure", "RPG"]} releaseDate="Dec, 2020"/>
-            <GameCard id="3" name="The Witcher 3" imageUrl="https://static.bandainamcoent.eu/high/the-witcher/the-witcher-3-wild-hunt/00-page-setup/tw3-new-header-mobile.jpg" rating={24} platforms={["playstation", "xbox", "pc", "nintendo"]} genres={["Action", "Adventure", "RPG"]} releaseDate="May, 2015"/>
-            <GameCard id="4" name="Minecraft" imageUrl="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Buzzy-Bees_1280x768.jpg" rating={93} platforms={["playstation", "xbox", "pc"]} genres={["Action", "Adventure", "RPG", "Sandbox", "Survival", "Open World"]} releaseDate="Nov, 2011"/>
-            <GameCard id="5" name="Grand Therf Auto: V" imageUrl="https://www.nobbot.com/wp-content/uploads/2021/10/gta-5-requisitos.jpg" rating={87} platforms={["playstation", "xbox", "pc", "mac"]} genres={["Action", "Open World", "RPG"]} releaseDate="Sep, 2016"/>
-            <GameCard id="6" name="Cyberpunk 2077" imageUrl="https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/bxSj4jO0KBqUgAbH3zuNjCje.jpg" rating={70} platforms={["playstation", "xbox", "pc", "mac"]} genres={["Action", "Adventure", "RPG"]} releaseDate="Dec, 2020"/>
-            <GameCard id="7" name="The Witcher 3" imageUrl="https://static.bandainamcoent.eu/high/the-witcher/the-witcher-3-wild-hunt/00-page-setup/tw3-new-header-mobile.jpg" rating={58} platforms={["playstation", "xbox", "pc", "nintendo"]} genres={["Action", "Adventure", "RPG"]} releaseDate="May, 2015"/>
+            {currentGames.map((game) => (
+                <GameCard key={game.id} id={game.id} name={game.name} imageUrl={game.imageUrl} rating={game.metacritic} platforms={game.platforms} genres={game.genres} releaseDate={game.released}/>
+            ))}
+            {currentGames.length === 0 && <p>No games found</p>}
         </div>
+        { currentGames.length > 0 &&
         <div className={styles["pagination-container"]}>
             <ReactPaginate
                 breakLabel="..."
@@ -59,6 +72,7 @@ const GameCardsPaginate = () => {
                 activeLinkClassName={styles.active}
             />
         </div>
+        }
       </div>
     )
 }
