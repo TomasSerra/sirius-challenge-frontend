@@ -42,7 +42,7 @@ const GameCardsPaginate = (genres?: { genres: string | undefined; }) => {
     }, [filters]);
 
     useEffect(() => {
-        setFilters({...filters, genres: genres?.genres?.toLowerCase()});
+        setFilters({...filters, genres: genres?.genres?.toLowerCase().replace(/\s+/g, '-')});
     }, [genres]);
 
     const SkeletonCards = () => {

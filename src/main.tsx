@@ -4,11 +4,9 @@ import App from "./App";
 import Home from "./pages/home/Home";
 import GamePage from "./pages/game/GamePage";
 import "./index.scss";
-import { StrictMode } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <StrictMode>
     <SkeletonTheme baseColor="#454545" highlightColor="#575757">
       <BrowserRouter>
         <Routes>
@@ -20,6 +18,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </Routes>
       </BrowserRouter>
     </SkeletonTheme>
-  </StrictMode>
 );
 
