@@ -7,27 +7,13 @@ import Dropdown from '@/components/ui/dropdown/Dropdown';
 import { CiFilter } from 'react-icons/ci';
 import { getGameCardsInfo } from '@/utils/DataMapper';
 import { GameCardInfo } from '@/types/gameCardInfo';
-import { Ordering } from '@/types/ordering';
 import { GameFilters } from '@/types/filters';
+import { OrderByOptions } from '@/types/orderByOptions';
 
-type OrderByOption = { value: Ordering, label: string };
-
-const OrderByOptions: OrderByOption[] = [
-    { value: '', label: 'Trending' },
-    { value: '-metacritic', label: 'Metacritic 🠗' },
-    { value: 'metacritic', label: 'Metacritic 🠕' },
-    { value: '-released', label: 'Release Date 🠗' },
-    { value: 'released', label: 'Release Date 🠕' },
-    { value: '-name', label: 'Name (A-Z)' },
-    { value: 'name', label: 'Name (Z-A)' },
-];
-
-const GameCardsPaginate = (genres?: string | undefined) => {
+const GameCardsPaginate = (genres?: { genres: string | undefined; }) => {
     const gamesPerPage = 10;
     const [loadingCards, setLoadingCards] = useState(false);
-    const [filters, setFilters] = useState<GameFilters>({
-        genres,
-    });
+    const [filters, setFilters] = useState<GameFilters>();
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentGames, setCurrentGames] = useState<GameCardInfo[]>([]);
@@ -53,7 +39,11 @@ const GameCardsPaginate = (genres?: string | undefined) => {
 
     useEffect(() => {
         fetchGames(currentPage);
-    }, []);
+    }, [filters]);
+
+    useEffect(() => {
+        setFilters({...filters, genres: genres?.genres?.toLowerCase()});
+    }, [genres]);
 
     const SkeletonCards = () => {
         return (
