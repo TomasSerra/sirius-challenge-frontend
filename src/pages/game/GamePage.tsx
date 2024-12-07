@@ -37,7 +37,6 @@ const GamePage = () => {
     const numericId = parseInt(id!.toString());
     getGamePageInfo(numericId).then((response) => {
       setGameData(response);
-      console.log(response);
       setLoading(false);
     }).catch((error) => {
       console.error("Error fetching game data:", error);
@@ -51,14 +50,14 @@ const GamePage = () => {
 
   const BackArrow = () => {
     return (
-      <span className={styles["back-arrow"]} onClick={goHome}>
+      <span className={styles["back-arrow"]} onClick={goBack}>
         <IoIosArrowBack size={30}/>
       </span>
     )
   }
   
-  const goHome = () => {
-    navigate('/');
+  const goBack = () => {
+    navigate(-1);
   }
 
   return (
