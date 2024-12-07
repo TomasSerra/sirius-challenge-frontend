@@ -7,15 +7,16 @@ import Button from '../button/Button';
 import { useNavigate } from "react-router-dom";
 
 type BannerProps = {
-    id: string;
+    id: number;
     name: string;
     platforms: Platform[];
     description: string;
     genres: string[];
     imageUrl: string;
+    loading?: boolean;
 };
 
-const Banner = ({id, name, platforms, description, genres, imageUrl}: BannerProps) => {
+const Banner = ({id, name, platforms, description, genres, imageUrl, loading=false}: BannerProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -31,29 +32,29 @@ const Banner = ({id, name, platforms, description, genres, imageUrl}: BannerProp
     >
         <div className={styles["info-container"]}>
             <div className={styles.top}>
-                { name ?
+                { !loading ?
                 <h3>{name}</h3>
                 :
                 <Skeleton width={150} height={30}/>
                 }
 
-                { platforms && platforms!.length > 0 ?
                 <div className={styles["platforms-container"]}>
-                    <PlatformsList platforms={platforms!}/>
+                    <PlatformsList platforms={platforms!} loading={loading}/>
                 </div>
-                :
-                <Skeleton width={100} style={{marginTop: '5px'}}/>
-                }
                 
-                { description ?
+                { !loading ?
                 <p className={styles.description}>{description}</p>
                 :
                 <Skeleton count={4}/>
                 }
             </div>
             <div className={styles.bottom}>
+                { !loading ?
                 <Button text='View Game' onClick={handleClick}/>
-                { genres && genres!.length > 0 ?
+                :
+                <Skeleton width={200} height={50}/>
+                }
+                { !loading && genres && genres!.length > 0 ?
                 <p className={styles.genres}>{genres!.join(', ')}</p>
                 :
                 <Skeleton width={200} height={20}/>

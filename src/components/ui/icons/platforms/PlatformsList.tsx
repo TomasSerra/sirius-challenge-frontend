@@ -1,4 +1,3 @@
-import React from 'react'
 import PlatformIcon from './Platform';
 import { Platform } from '@/types/platforms';
 import Skeleton from 'react-loading-skeleton';
@@ -6,9 +5,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 type PlatformsListProps = {
     platforms: Platform[] | undefined ;
+    loading?: boolean;
 }
 
-const PlatformsList = ({platforms}: PlatformsListProps) => {
+const PlatformsList = ({platforms, loading=false}: PlatformsListProps) => {
   return (
     <div style={
         {
@@ -18,7 +18,7 @@ const PlatformsList = ({platforms}: PlatformsListProps) => {
             alignItems: 'center',
         }
     }>
-      { platforms && platforms.length > 0 ?
+      { !loading ?
       <>
         {platforms?.map((platform, index) => (
           <PlatformIcon key={index} icon={platform} color="white"/>

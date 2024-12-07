@@ -8,4 +8,5 @@ export interface GameCardInfo {
     metacritic: number;
     released: string;
     genres: string[];
+    description: string;
 }

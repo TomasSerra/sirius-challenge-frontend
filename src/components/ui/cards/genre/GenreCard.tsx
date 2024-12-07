@@ -1,3 +1,4 @@
+import LazyImage from '@/components/utils/images/optimizer/LazyImage';
 import styles from './GenreCard.module.scss'
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -8,6 +9,7 @@ type GenreCardProps = {
     onClick?: () => void;
     width?: string;
     height?: string;
+    loading?: boolean;
 };
 
 const GenreCard = ({
@@ -16,6 +18,7 @@ const GenreCard = ({
     text,
     imageUrl,
     onClick = () => {},
+    loading = false,
   }: GenreCardProps) => {
     return (
       <div
@@ -23,17 +26,17 @@ const GenreCard = ({
         style={{ width: width, height: height }}
         onClick={onClick}
       >
-        {imageUrl ? (
-          <img className={styles.image} src={imageUrl} alt={text} />
-        ) : (
+        {!loading ? 
+          <LazyImage className={styles.image} src={imageUrl} alt={text} />
+        : 
           <Skeleton className={styles.image} />
-        )}
+        }
   
-        {text ? (
+        {!loading ? 
           <p className={styles.text}>{text}</p>
-        ) : (
-          <Skeleton className={styles.text} height={25} width={100}/>
-        )}
+        : 
+          <Skeleton className={styles.text} height={15} width={100}/>
+        }
       </div>
     );
   };

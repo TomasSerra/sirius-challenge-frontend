@@ -3,23 +3,24 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 type GameDetailSectionProps = {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
+    loading?: boolean;
 }
 
-const GameDetailSection = ({ title, description }: GameDetailSectionProps) => {
+const GameDetailSection = ({ title, description, loading=false }: GameDetailSectionProps) => {
   return (
     <div className={styles.container}>
-        {title ?
-        <h2>{title}</h2>
+        {!loading ?
+         <>{description && <h2>{title}</h2>}</>
         :
-        <Skeleton width={70} height={40}/>
+        <Skeleton width={200} height={40}/>
         }
 
-        {description ?
+        {!loading ?
         <p className={styles.description}>{description}</p>
         :
-        <Skeleton count={4} height={30}/>
+        <Skeleton count={4} height={30} width={500}/>
         }
     </div>
   )

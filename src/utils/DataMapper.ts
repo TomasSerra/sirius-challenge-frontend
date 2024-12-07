@@ -7,9 +7,10 @@ import { GamePageInfo } from "@/types/gamePageInfo";
 import { GenreInfo } from "@/types/genresInfo";
 import { PaginatedGames } from "@/types/paginatedGames";
 
-export const getGameCardsInfo = (page: number, filters?: GameFilters): Promise<PaginatedGames> => {
-    return getGames(page, filters)
-      .then((response) => {
+export const getGameCardsInfo = async (page: number, filters?: GameFilters): Promise<PaginatedGames> => {
+  const pageSize = 10;
+    return getGames(page, filters, pageSize)
+      .then(async (response) => {
         const games = response.data.results;
         return {
           total: response.data.count,
@@ -21,6 +22,7 @@ export const getGameCardsInfo = (page: number, filters?: GameFilters): Promise<P
             platforms: game.parent_platforms.map((platform: ApiPlatform) => platform.platform.slug),
             genres: game.genres.map((genre: ApiGenre) => genre.name),
             released: game.released,
+            description: game.description_raw
           }))
         };
       })
@@ -30,7 +32,35 @@ export const getGameCardsInfo = (page: number, filters?: GameFilters): Promise<P
       });
   };
 
-export const getGamePageInfo = (gameId: number): Promise<GamePageInfo> => {
+  export const getGamesBannerInfo = async (): Promise<PaginatedGames> => {
+    return getGames(1, {}, 5)
+      .then(async (response) => {
+        const games = response.data.results;
+        const gamesWithDescription = await Promise.all(games.map(async (game: any) => {
+          const gamePageInfo = await getGamePageInfo(game.id);
+          return {
+            id: game.id,
+            name: game.name,
+            imageUrl: game.background_image,
+            metacritic: game.metacritic,
+            platforms: game.parent_platforms.map((platform: ApiPlatform) => platform.platform.slug),
+            genres: game.genres.map((genre: ApiGenre) => genre.name),
+            released: game.released,
+            description: gamePageInfo.description
+          };
+        }));
+        return {
+          total: response.data.count,
+          games: gamesWithDescription
+        };
+      })
+      .catch((error) => {
+        console.error("Error fetching game banner info:", error);
+        throw error;
+      });
+  }
+
+export const getGamePageInfo = async (gameId: number): Promise<GamePageInfo> => {
     return getGameInfo(gameId).then((response) => {
         const gameInfo = response.data;
         const minRequirements = gameInfo.platforms.filter((platform: ApiPlatform) => platform.platform.slug === "pc")[0]?.requirements.minimum;
@@ -48,7 +78,12 @@ export const getGamePageInfo = (gameId: number): Promise<GamePageInfo> => {
             min_requirements: minRequirements,
             recommended_requirements: recommendedRequirements,
             stores: gameInfo.stores,
-            ratings: gameInfo.ratings
+            metrics: {
+                exceptional: gameInfo.ratings.filter((rating) => rating.title === "exceptional")[0]?.count,
+                recommended: gameInfo.ratings.filter((rating) => rating.title === "recommended")[0]?.count,
+                meh: gameInfo.ratings.filter((rating) => rating.title === "meh")[0]?.count,
+                skip: gameInfo.ratings.filter((rating) => rating.title === "skip")[0]?.count
+            }
         };
     }).catch((error) => {
         console.error("Error fetching game info:", error);

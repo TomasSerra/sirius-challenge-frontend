@@ -1,19 +1,23 @@
-import { ApiRating } from "./api/rating";
 import { ApiStore } from "./api/store";
 import { Platform } from "./platforms";
 
 export interface GamePageInfo {
     id: number;
     name: string;
-    imageUrl: string;
     metacritic: number;
-    released: string;
-    genres: string[];
     platforms: Platform[];
+    genres: string[];
+    released: string;
     description: string;
+    imageUrl: string;
     developers: string[];
-    min_requirements: string;
-    recommended_requirements: string;
-    ratings: ApiRating[];
+    min_requirements: string,
+    recommended_requirements: string,
+    metrics: {
+        exceptional: number;
+        recommended: number;
+        meh: number;
+        skip: number;
+    }
     stores: ApiStore[];
 }

@@ -1,4 +1,6 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 type LazyImageProps = {
     src: string,
@@ -14,9 +16,7 @@ const LazyImage = ({ src, alt, className="" }: LazyImageProps) => {
         alt={alt}
         className={className}
         draggable={false}
-        wrapperProps={{
-            style: {transitionDelay: "1s"},
-        }}
+        effect='blur'
     />
   )
 }

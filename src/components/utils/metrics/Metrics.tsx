@@ -2,10 +2,10 @@ import styles from './Metrics.module.scss'
 import MetricItem from './item/MetricItem';
 
 type MetricsProps = {
-    exceptional: number;
-    recommended: number;
-    meh: number;
-    skip: number; 
+    exceptional?: number;
+    recommended?: number;
+    meh?: number;
+    skip?: number; 
 }
 
 const Colors = {
@@ -15,8 +15,11 @@ const Colors = {
     skip: '#F62C3B'
 }
 
-const Metrics = ({ exceptional, recommended, meh, skip }: MetricsProps) => {
-    const total: number = exceptional + recommended + meh + skip;
+const Metrics = ({ exceptional=0, recommended=0, meh=0, skip=0 }: MetricsProps) => {
+    let total: number = exceptional + recommended + meh + skip;
+    if (exceptional == undefined || recommended == undefined || meh == undefined || skip == undefined) {
+        total = 0;
+    }
     let exceptionalPercent = 0;
     let recommendedPercent = 0;
     let mehPercent = 0;
@@ -30,7 +33,7 @@ const Metrics = ({ exceptional, recommended, meh, skip }: MetricsProps) => {
 
   return (
     <>
-    { (exceptional || recommended || meh || skip) && total > 0 &&
+    { (exceptional || recommended || meh || skip) && (total > 0) ?
         <div className={styles.container}>
             <div className={styles["metric-box"]}>
                 <div style={{ 
@@ -61,6 +64,8 @@ const Metrics = ({ exceptional, recommended, meh, skip }: MetricsProps) => {
                 <MetricItem color={Colors.skip} text="Skip" value={skip}/>
             </div>
         </div>
+    :
+    <></>
     }
     </>
         

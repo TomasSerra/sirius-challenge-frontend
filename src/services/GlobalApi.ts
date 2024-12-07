@@ -23,8 +23,7 @@ const getGenres = async (): Promise<ApiGenre[]> => {
 
 
 
-const getGames = async (page: number, filters: GameFilters = {}): Promise<AxiosApiResponse<ApiPaginatedGames>> => {
-  const pageSize = 10;
+const getGames = async (page: number, filters: GameFilters = {}, pageSize: number): Promise<AxiosApiResponse<ApiPaginatedGames>> => {
   try {
     return await axiosCreate.get("/games", {
       params: {

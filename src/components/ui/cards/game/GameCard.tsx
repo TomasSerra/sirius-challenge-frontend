@@ -22,9 +22,10 @@ type GameCardProps = {
   genres?: string[];
   releaseDate: string;
   onClick?: () => void;
+  loading?: boolean;
 }
 
-const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: GameCardProps) => {
+const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate, loading=false}: GameCardProps) => {
   const navigate = useNavigate();
   const [loadingWebsite, setLoadingWebsite] = useState(false);
 
@@ -36,7 +37,6 @@ const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: 
     e.stopPropagation();
     setLoadingWebsite(true);
     getGameInfo(id).then((response) => {
-      console.log(response);
       if(response.data.website){
         window.open(response.data.website, "_blank");
       }
@@ -74,7 +74,7 @@ const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: 
     <div className={styles["game-card"]} onClick={handleClick}>
       
       <div className={styles["image-container"]}>
-        {imageUrl ? 
+        {!loading ? 
         <>
           { rating &&
             <div className={styles["rating-container"]}>
@@ -92,19 +92,19 @@ const GameCard = ({id, imageUrl, name, rating, platforms, genres, releaseDate}: 
       <div className={styles["game-card-info"]}>
         <div>
           <div className={styles["platforms-container"]}>
-            <PlatformsList platforms={platforms}/>
+            <PlatformsList platforms={platforms} loading={loading}/>
           </div>
 
-          { name ?
+          { !loading ?
           <h3 className={styles.name}>{name}</h3>
           :
           <Skeleton width={220} height={30}/>
           }
 
-          { genres && genres!.length > 0 &&
+          { !loading && genres && genres!.length > 0 &&
           <p className={styles.genres}>{genres!.join(', ')}</p>}
         </div>
-        { releaseDate ?
+        { !loading ?
         <p className={styles.date}><b>Release Date:</b> {releaseDate}</p>
         :
         <Skeleton width={150} height={15}/>
