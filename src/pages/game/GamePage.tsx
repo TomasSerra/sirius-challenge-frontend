@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import styles from './GamePage.module.scss';
-import { Platform } from "@/types/platforms";
 import { useEffect, useState } from "react";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';

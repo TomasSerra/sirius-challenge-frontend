@@ -1,4 +1,3 @@
-import React from 'react'
 import Select from 'react-dropdown-select';
 import styles from './Dropdown.module.scss';
 import './Dropdown.custom.scss';
