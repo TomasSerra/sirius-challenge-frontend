@@ -10,7 +10,12 @@ import { GameCardInfo } from '@/types/gameCardInfo';
 import { GameFilters } from '@/types/filters';
 import { OrderByOptions } from '@/types/orderByOptions';
 
-const GameCardsPaginate = (genres?: { genres: string | undefined; }) => {
+type GameCardsPaginateProps = {
+    genres?: string | undefined;
+    search?: string;
+}
+
+const GameCardsPaginate = ({genres, search}: GameCardsPaginateProps) => {
     const gamesPerPage = 10;
     const [loadingCards, setLoadingCards] = useState(false);
     const [filters, setFilters] = useState<GameFilters>();
@@ -42,8 +47,12 @@ const GameCardsPaginate = (genres?: { genres: string | undefined; }) => {
     }, [filters]);
 
     useEffect(() => {
-        setFilters({...filters, genres: genres?.genres?.toLowerCase().replace(/\s+/g, '-')});
-    }, [genres]);
+        setFilters({
+            ...filters, 
+            genres: genres?.toLowerCase().replace(/\s+/g, '-'),
+            search: search
+        });
+    }, [genres, search]);
 
     const SkeletonCards = () => {
         return (
