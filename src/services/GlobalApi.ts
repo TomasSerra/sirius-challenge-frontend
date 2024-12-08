@@ -9,7 +9,10 @@ const apiKey: string = import.meta.env.VITE_API_KEY;
 
 const axiosCreate = axios.create({
   baseURL: "https://api.rawg.io/api",
-  params: { key: apiKey },
+  params: { 
+    key: apiKey,
+    search_precise: true
+   },
 });
 
 const getGenres = async (): Promise<ApiGenre[]> => {
