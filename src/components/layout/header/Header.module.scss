@@ -1,16 +1,16 @@
 @use "../../../colors.scss";
 
-.header{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top:0;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    background-color: colors.$background-color;
-    box-shadow: colors.$background-color 0 0 5px 15px;
-    gap: 32px;
-    z-index: 1000;
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-color: colors.$background-color;
+  box-shadow: colors.$background-color 0 0 5px 15px;
+  gap: 32px;
+  z-index: 1000;
 }

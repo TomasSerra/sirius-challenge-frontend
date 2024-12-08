@@ -1,107 +1,106 @@
 @use "../../../../colors.scss";
 
-.game-card{
-    width: 260px;
-    height: 315px;
-    background-color: colors.$neutral-800;
-    overflow: hidden;
-    border-radius: 20px;
+.game-card {
+  width: 260px;
+  height: 315px;
+  background-color: colors.$neutral-800;
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+  user-select: text;
+  cursor: pointer;
+  transition: background-color 0.5s;
+
+  &:hover {
+    background-color: colors.$neutral-700;
+    .image-container {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .image-container {
     position: relative;
-    user-select: text;
-    cursor: pointer;
-    transition: background-color 0.5s;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    &:hover {
-        background-color: colors.$neutral-700;
-        .image-container{
-            img{
-                transform: scale(1.05);
-            }
-        }
+    .rating-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
     }
 
-    .image-container{
-        position: relative;
+    span {
+      height: 100%;
+      width: 100%;
+
+      .image {
         width: 100%;
-        height: 150px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .rating-container{
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 2;
-        }
-
-        span{
-            height: 100%;
-            width: 100%;
-
-            
-            .image{
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-                transition: transform 0.5s;
-            }
-        }
-
-        .button-container{
-            position: absolute;
-            padding: 5px;
-            bottom: 10px;
-            right: 10px;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.438);
-            border-radius: 50%;
-
-            &:hover{
-                background-color: rgba(0, 0, 0, 0.7);
-            }
-        }
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s;
+      }
     }
 
-    .game-card-info{
-        padding: 10px 16px 16px 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 165px;
-        box-sizing: border-box;
+    .button-container {
+      position: absolute;
+      padding: 5px;
+      bottom: 10px;
+      right: 10px;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.438);
+      border-radius: 50%;
 
-        .platforms-container{
-            margin-bottom: 5px;
-        }
-
-        .name{
-            display: -webkit-box; 
-            -webkit-box-orient: vertical;
-            overflow: hidden; 
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-        }
-
-        .genres{
-            color: #A5A5A5;
-            margin: 0;
-            display: -webkit-box; 
-            -webkit-box-orient: vertical;
-            overflow: hidden; 
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-        }
-
-        .date{
-            margin: 0;
-        }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
     }
+  }
+
+  .game-card-info {
+    padding: 10px 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 165px;
+    box-sizing: border-box;
+
+    .platforms-container {
+      margin-bottom: 5px;
+    }
+
+    .name {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+
+    .genres {
+      color: #a5a5a5;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+
+    .date {
+      margin: 0;
+    }
+  }
 }

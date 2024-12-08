@@ -7,11 +7,11 @@ const App = () => {
 
   const handleSearch = (query: string) => {
     navigate(`/?search=${query}`);
-  }
+  };
 
   return (
     <div className={styles["app-container"]}>
-      <Header onSearch={handleSearch}/>
+      <Header onSearch={handleSearch} />
       <main className={styles["main-container"]}>
         <Outlet />
       </main>

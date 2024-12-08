@@ -7,16 +7,15 @@ import "./index.scss";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-    <SkeletonTheme baseColor="#454545" highlightColor="#575757">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<Home />} />
-            <Route path="/:genre" element={<Home />} />
-            <Route path="/game/:id" element={<GamePage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </SkeletonTheme>
+  <SkeletonTheme baseColor="#454545" highlightColor="#575757">
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+          <Route path="/:genre" element={<Home />} />
+          <Route path="/game/:id" element={<GamePage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </SkeletonTheme>
 );
-

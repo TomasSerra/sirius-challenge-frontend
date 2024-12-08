@@ -1,1 +1,8 @@
-export type Platform = "nintendo" | "pc" | "xbox" | "playstation" | "mac" | "ios" | "linux";
+export type Platform =
+  | "nintendo"
+  | "pc"
+  | "xbox"
+  | "playstation"
+  | "mac"
+  | "ios"
+  | "linux";
