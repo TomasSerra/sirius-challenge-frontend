@@ -2,15 +2,18 @@ import Sidebar from '@/components/layout/sidebar/Sidebar';
 import styles from './Home.module.scss';
 import BannerCarousel from '@/components/ui/banner/carousel/BannerCarousel';
 import GameCardsPaginate from '@/components/layout/paginate/GameCardsPaginate';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const { genre } = useParams();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("search") || "";
+
   return (
     <>
       <Sidebar/>
       <div className={styles["home-container"]}>
-        { !genre &&
+        { !genre && !query &&
         <section>
           <BannerCarousel/>
         </section>
@@ -19,9 +22,12 @@ const Home = () => {
           { genre ?
           <h1>{genre}</h1>
           :
-          <h1>All Games</h1>
+          query ?
+            <h1>Search Results for: "{query}"</h1>
+            :
+            <h1>All Games</h1>
           }
-          <GameCardsPaginate genres={genre}/>
+          <GameCardsPaginate genres={genre} search={query}/>
         </section>
       </div>
     </>

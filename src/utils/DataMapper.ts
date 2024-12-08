@@ -32,33 +32,48 @@ export const getGameCardsInfo = async (page: number, filters?: GameFilters): Pro
       });
   };
 
+  const createBannerObject = (game: any, description: string | null): any => {
+    return {
+      id: game.id,
+      name: game.name,
+      imageUrl: game.background_image,
+      metacritic: game.metacritic,
+      platforms: game.parent_platforms.map(
+        (platform: ApiPlatform) => platform.platform.slug
+      ),
+      genres: game.genres.map((genre: ApiGenre) => genre.name),
+      released: game.released,
+      description: description || "",
+    };
+  };
+  
   export const getGamesBannerInfo = async (): Promise<PaginatedGames> => {
     return getGames(1, {}, 5)
       .then(async (response) => {
         const games = response.data.results;
-        const gamesWithDescription = await Promise.all(games.map(async (game: any) => {
-          const gamePageInfo = await getGamePageInfo(game.id);
-          return {
-            id: game.id,
-            name: game.name,
-            imageUrl: game.background_image,
-            metacritic: game.metacritic,
-            platforms: game.parent_platforms.map((platform: ApiPlatform) => platform.platform.slug),
-            genres: game.genres.map((genre: ApiGenre) => genre.name),
-            released: game.released,
-            description: gamePageInfo.description
-          };
-        }));
+        const gamesWithDescription = await Promise.all(
+          games.map(async (game: any) => {
+            try {
+              const gamePageInfo = await getGamePageInfo(game.id);
+              return createBannerObject(game, gamePageInfo?.description);
+            } catch (error) {
+              console.error(`Error fetching description for game ${game.id}:`, error);
+              return createBannerObject(game, null);
+            }
+          })
+        );
         return {
           total: response.data.count,
-          games: gamesWithDescription
+          games: gamesWithDescription,
         };
       })
       .catch((error) => {
         console.error("Error fetching game banner info:", error);
         throw error;
       });
-  }
+  };
+  
+  
 
 export const getGamePageInfo = async (gameId: number): Promise<GamePageInfo> => {
     return getGameInfo(gameId).then((response) => {
