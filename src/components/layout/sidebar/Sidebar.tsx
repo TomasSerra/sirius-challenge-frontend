@@ -55,7 +55,7 @@ const Sidebar = () => {
                 imageUrl={genre.imageUrl}
                 text={genre.text}
                 onClick={() => {
-                  handleClick(genre.text);
+                  handleClick(genre.id);
                 }}
               />
             ))}

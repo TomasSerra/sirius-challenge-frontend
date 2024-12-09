@@ -30,39 +30,49 @@ const Banner = ({
   const handleClick = () => {
     navigate(`/game/${id}`);
   };
+
+  if (loading) return <BannerSkeleton />;
+
   return (
     <div
       className={styles.banner}
       style={{
         backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,
-        backgroundColor: imageUrl ? undefined : "#474749",
       }}
     >
       <div className={styles["info-container"]}>
         <div className={styles.top}>
-          {!loading ? <h3>{name}</h3> : <Skeleton width={150} height={30} />}
-
+          <h3>{name}</h3>
           <div className={styles["platforms-container"]}>
             <PlatformsList platforms={platforms!} loading={loading} />
           </div>
-
-          {!loading ? (
-            <p className={styles.description}>{description}</p>
-          ) : (
-            <Skeleton count={4} />
-          )}
+          <p className={styles.description}>{description}</p>
         </div>
         <div className={styles.bottom}>
-          {!loading ? (
-            <Button text="View Game" onClick={handleClick} />
-          ) : (
-            <Skeleton width={200} height={50} />
-          )}
-          {!loading && genres && genres!.length > 0 ? (
+          <Button text="View Game" onClick={handleClick} />
+          {genres && genres!.length > 0 && (
             <p className={styles.genres}>{genres!.join(", ")}</p>
-          ) : (
-            <Skeleton width={200} height={20} />
           )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BannerSkeleton = () => {
+  return (
+    <div className={styles.banner}>
+      <div className={styles["info-container"]}>
+        <div className={styles.top}>
+          <Skeleton width={150} height={30} />
+          <div className={styles["platforms-container"]}>
+            <PlatformsList platforms={[]} loading={true} />
+          </div>
+          <Skeleton count={4} />
+        </div>
+        <div className={styles.bottom}>
+          <Skeleton width={200} height={50} />
+          <Skeleton width={200} height={20} />
         </div>
       </div>
     </div>

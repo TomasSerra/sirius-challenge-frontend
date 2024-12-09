@@ -15,7 +15,7 @@ export const getGameCardsInfo = async (
   page: number,
   filters?: GameFilters
 ): Promise<PaginatedGames> => {
-  const pageSize = 10;
+  const pageSize = 20;
   return getGames(page, filters, pageSize)
     .then(async (response) => {
       const games = response.data.results;
@@ -140,6 +140,7 @@ export const getGenres = (): Promise<GenreInfo[]> => {
       return response.map((genre: ApiGenre) => ({
         imageUrl: genre.image_background,
         text: genre.name,
+        id: genre.slug,
       }));
     })
     .catch((error) => {

@@ -20,7 +20,7 @@ const GameCardsPaginate = ({
   genre: genres,
   search,
 }: GameCardsPaginateProps) => {
-  const gamesPerPage = 10;
+  const gamesPerPage = 20;
   const [loadingCards, setLoadingCards] = useState(false);
   const filtersContext = useFilters();
   const filters = filtersContext ? filtersContext.filters : {};
@@ -52,6 +52,7 @@ const GameCardsPaginate = ({
 
   useEffect(() => {
     fetchGames(currentPage);
+    console.log(filters.ordering);
   }, [filters]);
 
   useEffect(() => {
@@ -99,6 +100,7 @@ const GameCardsPaginate = ({
       <div className={styles["filter-buttons-container"]}>
         <Dropdown
           options={OrderByOptions}
+          initialValue={filters.ordering}
           onChange={(values) => {
             setFilters({ ...filters, ordering: values[0].value });
           }}

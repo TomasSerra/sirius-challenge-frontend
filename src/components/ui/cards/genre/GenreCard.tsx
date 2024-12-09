@@ -20,23 +20,32 @@ const GenreCard = ({
   onClick = () => {},
   loading = false,
 }: GenreCardProps) => {
+  if (loading) return <GenreCardSkeleton width={width} height={height} />;
   return (
-    <div
-      className={styles.container}
-      style={{ width: width, height: height }}
-      onClick={onClick}
-    >
-      {!loading ? (
+    <>
+      <div
+        className={styles.container}
+        style={{ width: width, height: height }}
+        onClick={onClick}
+      >
         <LazyImage className={styles.image} src={imageUrl} alt={text} />
-      ) : (
-        <Skeleton className={styles.image} />
-      )}
-
-      {!loading ? (
         <p className={styles.text}>{text}</p>
-      ) : (
-        <Skeleton className={styles.text} height={15} width={100} />
-      )}
+      </div>
+    </>
+  );
+};
+
+const GenreCardSkeleton = ({
+  width,
+  height,
+}: {
+  width: string;
+  height: string;
+}) => {
+  return (
+    <div className={styles.container} style={{ width: width, height: height }}>
+      <Skeleton className={styles.image} />
+      <Skeleton className={styles.text} height={15} width={100} />
     </div>
   );
 };
