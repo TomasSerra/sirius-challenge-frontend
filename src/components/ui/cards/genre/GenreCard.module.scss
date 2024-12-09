@@ -1,32 +1,33 @@
-@use '../../../../colors.scss';
+@use "../../../../colors.scss";
 
-.container{
-    background-color: colors.$neutral-700;
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    gap: 10px;
-    transition: background-color 0.5s;
-    user-select: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-sizing: border-box;
+.container {
+  background-color: colors.$neutral-700;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  gap: 10px;
+  transition: background-color 0.5s;
+  user-select: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
 
-    .image, span{
-        width: 34px;
-        height: 34px;
-        border-radius: 4px;
-        object-fit: cover;
-        object-position: center;
-    }
+  .image,
+  span {
+    width: 34px;
+    height: 34px;
+    border-radius: 4px;
+    object-fit: cover;
+    object-position: center;
+  }
 
-    .text{
-        font-size: 1rem;
-        margin: 0;
-        width: 100%;
-    }
+  .text {
+    font-size: 1rem;
+    margin: 0;
+    width: 100%;
+  }
 
-    &:hover{
-        background-color: colors.$neutral-500;
-    }
+  &:hover {
+    background-color: colors.$neutral-500;
+  }
 }

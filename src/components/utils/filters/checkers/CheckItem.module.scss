@@ -1,0 +1,32 @@
+@use "../../../../colors.scss";
+
+.container {
+  display: flex;
+  gap: 16px;
+  width: fit-content;
+  align-items: center;
+
+  input[type="checkbox"] {
+    appearance: none;
+    cursor: pointer;
+
+    &::after {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      content: "";
+      width: 25px;
+      height: 25px;
+      border-radius: 5px;
+      background-color: colors.$neutral-700;
+    }
+  }
+
+  input[type="checkbox"]:checked {
+    &::after {
+      content: "✔";
+      color: white;
+      background-color: colors.$neutral-600;
+    }
+  }
+}

@@ -1,42 +1,42 @@
-@use '../../../colors.scss';
+@use "../../../colors.scss";
 
-.sidebar-container{
-    background-color: colors.$neutral-800;
-    width: 260px;
-    height: 80dvh;
-    border-radius: 20px;
-    padding: 26px 30px;
-    box-sizing: border-box;
+.sidebar-container {
+  background-color: colors.$neutral-800;
+  width: 260px;
+  height: 80dvh;
+  border-radius: 20px;
+  padding: 26px 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: fixed;
+
+  .genres-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    position: fixed;
+    gap: 10px;
+    justify-content: start;
+    align-items: start;
+    padding-right: 10px;
+    overflow: auto;
 
-    .genres-container{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        justify-content: start;
-        align-items: start;
-        padding-right: 10px;
-        overflow: auto;
-
-        &::-webkit-scrollbar-track {
-            background-color: #333;
-            border-radius: 10px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background-color: #555; 
-            border-radius: 10px;
-            &:hover{
-                background-color: #777;
-            }
-        }
-
-        &::-webkit-scrollbar {
-            width: 12px;
-            height: 12px;
-        }
+    &::-webkit-scrollbar-track {
+      background-color: #333;
+      border-radius: 10px;
     }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #555;
+      border-radius: 10px;
+      &:hover {
+        background-color: #777;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+  }
 }

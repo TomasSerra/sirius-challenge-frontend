@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { IoSearch } from 'react-icons/io5';
-import styles from './Searchbar.module.scss';
+import React, { useState } from "react";
+import { IoSearch } from "react-icons/io5";
+import styles from "./Searchbar.module.scss";
 
 type SearchBarProps = {
-    width?: string;
-    placeholder?: string;
-    onSearch?: (query: string) => void;
-}
+  width?: string;
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+};
 
-const SearchBar= ({ placeholder = "Search Game", onSearch=()=>{}, width="100%" }: SearchBarProps) => {
+const SearchBar = ({
+  placeholder = "Search Game",
+  onSearch = () => {},
+  width = "100%",
+}: SearchBarProps) => {
   const [query, setQuery] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,22 +27,19 @@ const SearchBar= ({ placeholder = "Search Game", onSearch=()=>{}, width="100%" }
   };
 
   return (
-    <div 
-        className={styles.container}
-        style={{width: width}}
-    >
+    <div className={styles.container} style={{ width: width }}>
       <span className={styles.icon}>
         <IoSearch />
       </span>
 
-        <input
-            type="text"
-            value={query}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-            className={styles.input}
-        />
+      <input
+        type="text"
+        value={query}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder}
+        className={styles.input}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-@use 'colors.scss';
+@use "colors.scss";
 
 :root {
   font-family: Inter;
@@ -16,20 +16,20 @@
   }
 
   &::-webkit-scrollbar-thumb {
-      background-color: #555; 
-      border-radius: 10px;
-      &:hover{
-          background-color: #777;
-      }
+    background-color: #555;
+    border-radius: 10px;
+    &:hover {
+      background-color: #777;
+    }
   }
 
   &::-webkit-scrollbar {
-      width: 12px;
-      height: 12px;
+    width: 12px;
+    height: 12px;
   }
 }
 
-h1{
+h1 {
   font-size: 2em;
   line-height: 40px;
   margin: 0;
@@ -41,13 +41,13 @@ h2 {
   margin: 0;
 }
 
-h3{
+h3 {
   font-size: 1.25em;
   line-height: 25px;
   margin: 0;
 }
 
-p{
+p {
   line-height: 20px;
   margin: 0;
 }

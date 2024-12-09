@@ -1,3 +1,3 @@
 export interface AxiosApiResponse<T> {
-    data: T;
-  }
+  data: T;
+}
