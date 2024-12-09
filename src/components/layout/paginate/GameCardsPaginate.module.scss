@@ -6,12 +6,22 @@
 }
 
 .games-container {
+  position: relative;
   margin-top: 20px;
   width: 100%;
   height: fit-content;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
+
+  .no-found {
+    color: rgba(255, 255, 255, 0.493);
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+  }
 }
 
 .pagination-container {

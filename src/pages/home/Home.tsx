@@ -26,7 +26,7 @@ const Home = () => {
           ) : (
             <h1>All Games</h1>
           )}
-          <GameCardsPaginate genres={genre} search={query} />
+          <GameCardsPaginate genre={genre} search={query} />
         </section>
       </div>
     </>

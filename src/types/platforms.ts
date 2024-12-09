@@ -5,4 +5,5 @@ export type Platform =
   | "playstation"
   | "mac"
   | "ios"
-  | "linux";
+  | "linux"
+  | "android";

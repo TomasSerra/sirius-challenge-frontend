@@ -9,19 +9,24 @@ import { getGameCardsInfo } from "@/utils/DataMapper";
 import { GameCardInfo } from "@/types/gameCardInfo";
 import { GameFilters } from "@/types/filters";
 import { OrderByOptions } from "@/types/orderByOptions";
+import Filters from "@/components/utils/filters/Filters";
 
 type GameCardsPaginateProps = {
-  genres?: string | undefined;
+  genre?: string | undefined;
   search?: string;
 };
 
-const GameCardsPaginate = ({ genres, search }: GameCardsPaginateProps) => {
+const GameCardsPaginate = ({
+  genre: genres,
+  search,
+}: GameCardsPaginateProps) => {
   const gamesPerPage = 10;
   const [loadingCards, setLoadingCards] = useState(false);
   const [filters, setFilters] = useState<GameFilters>();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGames, setCurrentGames] = useState<GameCardInfo[]>([]);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const handlePageClick = (event: { selected: number }) => {
     const newPage: number = event.selected + 1;
@@ -76,6 +81,17 @@ const GameCardsPaginate = ({ genres, search }: GameCardsPaginateProps) => {
 
   return (
     <div>
+      {filtersOpen && (
+        <Filters
+          close={() => {
+            setFiltersOpen(false);
+          }}
+          onApply={(filters) => {
+            setFilters(filters);
+          }}
+          initialFilters={filters}
+        />
+      )}
       <div className={styles["filter-buttons-container"]}>
         <Dropdown
           options={OrderByOptions}
@@ -89,7 +105,7 @@ const GameCardsPaginate = ({ genres, search }: GameCardsPaginateProps) => {
           isFilled={false}
           icon={<CiFilter />}
           onClick={() => {
-            fetchGames(currentPage);
+            setFiltersOpen(true);
           }}
         />
       </div>
@@ -110,7 +126,9 @@ const GameCardsPaginate = ({ genres, search }: GameCardsPaginateProps) => {
                 releaseDate={game.released}
               />
             ))}
-            {currentGames.length === 0 && <p>No games found</p>}
+            {currentGames.length === 0 && (
+              <p className={styles["no-found"]}>No games found</p>
+            )}
           </>
         )}
       </div>
