@@ -10,6 +10,7 @@ import { GameCardInfo } from "@/types/gameCardInfo";
 import { GameFilters } from "@/types/filters";
 import { OrderByOptions } from "@/types/orderByOptions";
 import Filters from "@/components/utils/filters/Filters";
+import { useFilters } from "@/contexts/filters/FiltersContext";
 
 type GameCardsPaginateProps = {
   genre?: string | undefined;
@@ -22,7 +23,9 @@ const GameCardsPaginate = ({
 }: GameCardsPaginateProps) => {
   const gamesPerPage = 10;
   const [loadingCards, setLoadingCards] = useState(false);
-  const [filters, setFilters] = useState<GameFilters>();
+  const filtersContext = useFilters();
+  const filters = filtersContext ? filtersContext.filters : {};
+  const setFilters = filtersContext ? filtersContext.setFilters : () => {};
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGames, setCurrentGames] = useState<GameCardInfo[]>([]);
@@ -87,7 +90,9 @@ const GameCardsPaginate = ({
             setFiltersOpen(false);
           }}
           onApply={(filters) => {
-            setFilters(filters);
+            if (filters) {
+              setFilters(filters);
+            }
           }}
           initialFilters={filters}
         />
