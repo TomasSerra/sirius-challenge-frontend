@@ -89,51 +89,57 @@ const GameCard = ({
     );
   };
 
+  if (loading) return <GameCardSkeleton />;
+
   return (
     <div className={styles["game-card"]} onClick={handleClick}>
       <div className={styles["image-container"]}>
-        {!loading ? (
-          <>
-            {rating && (
-              <div className={styles["rating-container"]}>
-                <Rating rating={rating} />
-              </div>
-            )}
-            <LazyImage
-              src={imageUrl}
-              alt={"card image " + name}
-              className={styles.image}
-            />
-            <WebsiteButton />
-          </>
-        ) : (
-          <Skeleton height={150} width={260} />
+        {rating && (
+          <div className={styles["rating-container"]}>
+            <Rating rating={rating} />
+          </div>
         )}
+        <LazyImage
+          src={imageUrl}
+          alt={"card image " + name}
+          className={styles.image}
+        />
+        <WebsiteButton />
       </div>
 
       <div className={styles["game-card-info"]}>
         <div>
           <div className={styles["platforms-container"]}>
-            <PlatformsList platforms={platforms} loading={loading} />
+            <PlatformsList platforms={platforms} />
           </div>
-
-          {!loading ? (
-            <h3 className={styles.name}>{name}</h3>
-          ) : (
-            <Skeleton width={220} height={30} />
-          )}
-
-          {!loading && genres && genres!.length > 0 && (
+          <h3 className={styles.name}>{name}</h3>
+          {genres && genres!.length > 0 && (
             <p className={styles.genres}>{genres!.join(", ")}</p>
           )}
         </div>
-        {!loading ? (
-          <p className={styles.date}>
-            <b>Release Date:</b> {releaseDate}
-          </p>
-        ) : (
+        <p className={styles.date}>
+          <b>Release Date:</b> {releaseDate}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const GameCardSkeleton = () => {
+  return (
+    <div className={styles["game-card"]}>
+      <div className={styles["image-container"]}>
+        <Skeleton height={150} width={260} />
+      </div>
+
+      <div className={styles["game-card-info"]}>
+        <div>
+          <div className={styles["platforms-container"]}>
+            <PlatformsList platforms={[]} loading={true} />
+          </div>
+          <Skeleton width={220} height={30} style={{ marginBottom: "10px" }} />
           <Skeleton width={150} height={15} />
-        )}
+        </div>
       </div>
     </div>
   );

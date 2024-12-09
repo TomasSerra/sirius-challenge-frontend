@@ -6,6 +6,10 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const { genre } = useParams();
+  const genreName = genre
+    ? genre.replace(/-/g, " ").charAt(0).toUpperCase() +
+      genre.replace(/-/g, " ").slice(1)
+    : "";
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
 
@@ -20,7 +24,7 @@ const Home = () => {
         )}
         <section>
           {genre ? (
-            <h1>{genre}</h1>
+            <h1>{genreName}</h1>
           ) : query ? (
             <h1>Search Results for: "{query}"</h1>
           ) : (

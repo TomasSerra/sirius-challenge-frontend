@@ -2,11 +2,12 @@ import Select from "react-dropdown-select";
 import styles from "./Dropdown.module.scss";
 import "./Dropdown.custom.scss";
 import { Ordering } from "@/types/ordering";
+import { useState } from "react";
 
 type DropdownProps = {
   options: { value: Ordering; label: string }[];
   onChange?: (values: { value: Ordering; label: string }[]) => void;
-  initialValue?: { value: Ordering; label: string };
+  initialValue?: string;
 };
 
 const Dropdown = ({
@@ -14,9 +15,19 @@ const Dropdown = ({
   onChange = () => {},
   initialValue,
 }: DropdownProps) => {
-  if (!initialValue) {
-    initialValue = options[0];
-  }
+  const searchInitialValue = (initialValue: string) => {
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].value === initialValue) {
+        return options[i];
+      }
+    }
+    return options[0];
+  };
+
+  const [selected] = useState<{ value: Ordering; label: string }>(
+    searchInitialValue(initialValue ? initialValue : options[0].label)
+  );
+
   return (
     <div>
       <Select
@@ -24,7 +35,7 @@ const Dropdown = ({
         valueField="value"
         labelField="label"
         dropdownHandle={true}
-        values={[initialValue]}
+        values={[selected]}
         color="#474749"
         onChange={(values) => onChange(values)}
         className={styles.dropdown}
