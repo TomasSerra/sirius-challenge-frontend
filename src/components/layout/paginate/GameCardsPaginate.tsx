@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import styles from "./GameCardsPaginate.module.scss";
-import GameCard from "@/components/ui/cards/game/GameCard";
 import Button from "@/components/ui/button/Button";
 import Dropdown from "@/components/ui/dropdown/Dropdown";
 import { CiFilter } from "react-icons/ci";
@@ -10,20 +9,25 @@ import { GameCardInfo } from "@/types/gameCardInfo";
 import { OrderByOptions } from "@/types/orderByOptions";
 import Filters from "@/components/utils/filters/Filters";
 import { useFilters } from "@/contexts/filters/FiltersContext";
+import { GameFilters } from "@/types/filters";
+import { GenreInfo } from "@/types/genresInfo";
+import GameCards from "./cards/GameCards";
 
 type GameCardsPaginateProps = {
   genre?: string | undefined;
+  genres?: GenreInfo[] | undefined;
   search?: string;
 };
 
 const GameCardsPaginate = ({
-  genre: genres,
+  genre,
+  genres,
   search,
 }: GameCardsPaginateProps) => {
   const gamesPerPage = 20;
   const [loadingCards, setLoadingCards] = useState(false);
   const filtersContext = useFilters();
-  const filters = filtersContext ? filtersContext.filters : {};
+  const filters: GameFilters = filtersContext ? filtersContext.filters : {};
   const setFilters = filtersContext ? filtersContext.setFilters : () => {};
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,35 +56,15 @@ const GameCardsPaginate = ({
 
   useEffect(() => {
     fetchGames(currentPage);
-    console.log(filters.ordering);
   }, [filters]);
 
   useEffect(() => {
     setFilters({
       ...filters,
-      genres: genres?.toLowerCase().replace(/\s+/g, "-"),
+      genres: genre?.toLowerCase().replace(/\s+/g, "-"),
       search: search,
     });
-  }, [genres, search]);
-
-  const SkeletonCards = () => {
-    return (
-      <>
-        {[...Array(gamesPerPage)].map((_, index) => (
-          <GameCard
-            key={index}
-            id={index}
-            imageUrl=""
-            name=""
-            rating={0}
-            platforms={[]}
-            releaseDate=""
-            loading={true}
-          />
-        ))}
-      </>
-    );
-  };
+  }, [genre, search]);
 
   return (
     <div>
@@ -95,6 +79,7 @@ const GameCardsPaginate = ({
             }
           }}
           initialFilters={filters}
+          genres={genres}
         />
       )}
       <div className={styles["filter-buttons-container"]}>
@@ -116,27 +101,11 @@ const GameCardsPaginate = ({
         />
       </div>
       <div className={styles["games-container"]}>
-        {loadingCards ? (
-          <SkeletonCards />
-        ) : (
-          <>
-            {currentGames.map((game) => (
-              <GameCard
-                key={game.id}
-                id={game.id}
-                name={game.name}
-                imageUrl={game.imageUrl}
-                rating={game.metacritic}
-                platforms={game.platforms}
-                genres={game.genres}
-                releaseDate={game.released}
-              />
-            ))}
-            {currentGames.length === 0 && (
-              <p className={styles["no-found"]}>No games found</p>
-            )}
-          </>
-        )}
+        <GameCards
+          games={currentGames}
+          loading={loadingCards}
+          gamesPerPage={gamesPerPage}
+        />
       </div>
       {currentGames.length > 0 && (
         <div className={styles["pagination-container"]}>

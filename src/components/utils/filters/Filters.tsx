@@ -4,6 +4,7 @@ import CheckersList from "./checkers/CheckersList";
 import { IoClose } from "react-icons/io5";
 import { GameFilters } from "@/types/filters";
 import { useState } from "react";
+import { GenreInfo } from "@/types/genresInfo";
 
 const platforms: { id: string; name: string }[] = [
   { id: "1", name: "PC" },
@@ -25,30 +26,14 @@ const tags: { id: string; name: string }[] = [
   { id: "free", name: "Free" },
 ];
 
-const genres: { id: string; name: string }[] = [
-  { id: "action", name: "Action" },
-  { id: "indie", name: "Indie" },
-  { id: "adventure", name: "Adventure" },
-  { id: "rpg", name: "RPG" },
-  { id: "strategy", name: "Strategy" },
-  { id: "shooter", name: "Shooter" },
-  { id: "casual", name: "Casual" },
-  { id: "simulation", name: "Simulation" },
-  { id: "puzzle", name: "Puzzle" },
-  { id: "sports", name: "Sports" },
-  { id: "arcade", name: "Arcade" },
-  { id: "platformer", name: "Platformer" },
-  { id: "racing", name: "Racing" },
-  { id: "fighting", name: "Fighting" },
-];
-
 type FiltersProps = {
   close: () => void;
   onApply: (filters?: GameFilters) => void;
   initialFilters?: GameFilters;
+  genres?: GenreInfo[];
 };
 
-const Filters = ({ close, onApply, initialFilters }: FiltersProps) => {
+const Filters = ({ close, onApply, initialFilters, genres }: FiltersProps) => {
   const [checkedProps, setCheckedProps] = useState<GameFilters>(
     initialFilters || {}
   );
@@ -151,7 +136,10 @@ const Filters = ({ close, onApply, initialFilters }: FiltersProps) => {
             <h3>Genres</h3>
             <CheckersList
               initialCheckedProps={checkedProps.genres?.split(",") || []}
-              options={genres}
+              options={
+                genres?.map((genre) => ({ id: genre.id, name: genre.text })) ||
+                []
+              }
               onChange={(props) =>
                 setCheckedProps({
                   ...checkedProps,

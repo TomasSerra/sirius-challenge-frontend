@@ -16,9 +16,7 @@ const Item = ({ id, name, onChange, checked = false }: ItemProps) => {
         onChange={(e) => onChange(id, e.target.checked)}
         className={styles.input}
       />
-      <label htmlFor={id} className={styles.label}>
-        {name}
-      </label>
+      <label className={styles.label}>{name}</label>
     </div>
   );
 };

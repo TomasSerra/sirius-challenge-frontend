@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
+import styles from "./Rating.module.scss";
 
 type RatingProps = {
   rating: number;
@@ -7,7 +8,6 @@ type RatingProps = {
 
 const Rating = ({ rating }: RatingProps) => {
   const [color, setColor] = useState<string>("#06883C");
-  //random Id
   const tooltipId = useState<number>(Math.floor(Math.random() * 1000));
 
   useEffect(() => {
@@ -25,20 +25,9 @@ const Rating = ({ rating }: RatingProps) => {
       <div
         data-tooltip-id={"rating-tooltip-" + tooltipId}
         data-tooltip-content={"Metacritic"}
+        className={styles.rating}
         style={{
-          width: "50px",
-          height: "50px",
-          borderRadius: "15px",
           backgroundColor: color,
-          color: "white",
-          fontWeight: "bold",
-          fontSize: "1rem",
-          opacity: 0.85,
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
         }}
       >
         {rating}

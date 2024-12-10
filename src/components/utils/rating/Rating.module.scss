@@ -1,0 +1,14 @@
+.rating {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  opacity: 0.85;
+  backdrop-filter: blur(20px);
+  --webkitBackdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

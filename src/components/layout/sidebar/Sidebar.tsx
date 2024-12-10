@@ -1,31 +1,15 @@
-import { getGenres } from "@/utils/DataMapper";
 import styles from "./Sidebar.module.scss";
 import GenreCard from "@/components/ui/cards/genre/GenreCard";
 import { GenreInfo } from "@/types/genresInfo";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = () => {
+type SidebarProps = {
+  genres: GenreInfo[];
+  loading?: boolean;
+};
+
+const Sidebar = ({ genres, loading = false }: SidebarProps) => {
   const navigate = useNavigate();
-  const [genres, setGenres] = useState<GenreInfo[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchGenres = async () => {
-    setLoading(true);
-    getGenres()
-      .then((response) => {
-        setGenres(response);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching genres:", error);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchGenres();
-  }, []);
 
   const SkeletonCards = () => {
     return (

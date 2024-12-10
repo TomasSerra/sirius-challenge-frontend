@@ -12,8 +12,16 @@ import { useNavigate } from "react-router-dom";
 import { GamePageInfo } from "@/types/gamePageInfo";
 import { getGamePageInfo } from "@/utils/DataMapper";
 
-const GameName = ({ name }: { name: string | undefined }) => {
-  return <>{name ? <h1>{name}</h1> : <Skeleton width={250} height={40} />}</>;
+const GameName = ({
+  name,
+  loading = false,
+}: {
+  name: string | undefined;
+  loading?: boolean;
+}) => {
+  return (
+    <>{!loading ? <h1>{name}</h1> : <Skeleton width={250} height={40} />}</>
+  );
 };
 
 const GamePage = () => {
@@ -63,7 +71,6 @@ const GamePage = () => {
               backgroundImage: gameData?.imageUrl
                 ? `url(${gameData?.imageUrl})`
                 : undefined,
-              backgroundColor: gameData?.imageUrl ? undefined : "#474749",
             }}
           >
             <BackArrow />
@@ -88,7 +95,7 @@ const GamePage = () => {
         </section>
       </div>
       <div className={styles.right}>
-        <GameName name={gameData?.name} />
+        <GameName name={gameData?.name} loading={loading} />
         <PlatformsList platforms={gameData?.platforms} loading={loading} />
         <Metrics
           exceptional={gameData?.metrics.exceptional}
