@@ -29,7 +29,6 @@ const GamePage = () => {
 
   const [gameData, setGameData] = useState<GamePageInfo>();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const fetchGameData = async () => {
     setLoading(true);
@@ -49,50 +48,11 @@ const GamePage = () => {
     fetchGameData();
   }, []);
 
-  const BackArrow = () => {
-    return (
-      <span className={styles["back-arrow"]} onClick={goBack}>
-        <IoIosArrowBack size={30} />
-      </span>
-    );
-  };
-
-  const goBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div className={styles["game-page-container"]}>
       <div className={styles.left}>
-        <div className={styles["banner-container"]}>
-          <div
-            className={styles.banner}
-            style={{
-              backgroundImage: gameData?.imageUrl
-                ? `url(${gameData?.imageUrl})`
-                : undefined,
-            }}
-          >
-            <BackArrow />
-          </div>
-        </div>
-        <section className={styles["detail-sections"]}>
-          <GameDetailSection
-            title="About The Game"
-            description={gameData?.description}
-            loading={loading}
-          />
-          <GameDetailSection
-            title="Minimum Requirements"
-            description={gameData?.min_requirements}
-            loading={loading}
-          />
-          <GameDetailSection
-            title="Recommended Requirements"
-            description={gameData?.recommended_requirements}
-            loading={loading}
-          />
-        </section>
+        <Banner gameData={gameData} />
+        <GameDetailsSection gameData={gameData} loading={loading} />
       </div>
       <div className={styles.right}>
         <GameName name={gameData?.name} loading={loading} />
@@ -103,40 +63,116 @@ const GamePage = () => {
           meh={gameData?.metrics.meh}
           skip={gameData?.metrics.skip}
         />
-        <div className={styles.details}>
-          <div className={styles["detail-column"]}>
-            <GameDetail
-              title="Platforms"
-              description={gameData?.platforms?.join(", ")}
-              loading={loading}
-            />
-            <GameDetail
-              title="Genre"
-              description={gameData?.genres?.join(", ")}
-              loading={loading}
-            />
-            <GameDetail
-              title="Developers"
-              description={gameData?.developers?.join(", ")}
-              loading={loading}
-            />
-          </div>
-          <div className={styles["detail-column"]}>
-            <GameDetail
-              title="Rating"
-              description={gameData?.metacritic?.toString()}
-              loading={loading}
-            />
-            <GameDetail
-              title="Release Date"
-              description={gameData?.released}
-              loading={loading}
-            />
-          </div>
-        </div>
+        <GameDetails gameData={gameData} loading={loading} />
+      </div>
+    </div>
+  );
+};
+export default GamePage;
+
+const Banner = ({ gameData }: { gameData?: GamePageInfo }) => {
+  const navigate = useNavigate();
+
+  const BackArrow = () => {
+    return (
+      <span
+        className={styles["back-arrow"]}
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <IoIosArrowBack size={30} />
+      </span>
+    );
+  };
+
+  return (
+    <div className={styles["banner-container"]}>
+      <div
+        className={styles.banner}
+        style={{
+          backgroundImage: gameData?.imageUrl
+            ? `url(${gameData?.imageUrl})`
+            : undefined,
+        }}
+      >
+        <BackArrow />
       </div>
     </div>
   );
 };
 
-export default GamePage;
+type GameDetailsProps = {
+  gameData?: GamePageInfo;
+  loading?: boolean;
+};
+
+const GameDetailsSection = ({
+  gameData,
+  loading = false,
+}: GameDetailsProps) => {
+  return (
+    <section className={styles["detail-sections"]}>
+      <GameDetailSection
+        title="About The Game"
+        description={gameData?.description}
+        loading={loading}
+      />
+      <GameDetailSection
+        title="Minimum Requirements"
+        description={gameData?.min_requirements}
+        loading={loading}
+      />
+      <GameDetailSection
+        title="Recommended Requirements"
+        description={gameData?.recommended_requirements}
+        loading={loading}
+      />
+    </section>
+  );
+};
+
+const GameDetails = ({ gameData, loading = false }: GameDetailsProps) => {
+  const joinArray = (array: string[] | undefined): string | undefined => {
+    return array?.map((s) => firstCharUpper(s)).join(", ");
+  };
+
+  const firstCharUpper = (str: string) => {
+    if (str.length === 0) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  return (
+    <div className={styles.details}>
+      <div className={styles["detail-column"]}>
+        <GameDetail
+          title="Platforms"
+          description={joinArray(gameData?.platforms)}
+          loading={loading}
+        />
+        <GameDetail
+          title="Genre"
+          description={joinArray(gameData?.genres)}
+          loading={loading}
+        />
+        <GameDetail
+          title="Developers"
+          description={joinArray(gameData?.developers)}
+          loading={loading}
+        />
+      </div>
+      <div className={styles["detail-column"]}>
+        <GameDetail
+          title="Rating"
+          description={gameData?.metacritic?.toString()}
+          loading={loading}
+        />
+        <GameDetail
+          title="Release Date"
+          description={gameData?.released}
+          loading={loading}
+        />
+      </div>
+    </div>
+  );
+};
