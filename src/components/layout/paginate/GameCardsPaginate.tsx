@@ -59,6 +59,7 @@ const GameCardsPaginate = ({
   }, [filters]);
 
   useEffect(() => {
+    setCurrentPage(1);
     setFilters({
       ...filters,
       genres: genre?.toLowerCase().replace(/\s+/g, "-"),
@@ -116,6 +117,7 @@ const GameCardsPaginate = ({
             pageRangeDisplayed={3}
             marginPagesDisplayed={1}
             pageCount={totalPages}
+            forcePage={currentPage - 1}
             previousLabel="<"
             renderOnZeroPageCount={null}
             containerClassName={styles.pagination}
