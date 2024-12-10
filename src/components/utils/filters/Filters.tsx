@@ -180,7 +180,9 @@ const Filters = ({ close, onApply, initialFilters, genres }: FiltersProps) => {
         {applyError && applyError !== "" && (
           <span className={styles.error}>{applyError}</span>
         )}
-        <Button text="Apply" width="100%" onClick={handleApply} />
+        <div className={styles["apply-button"]}>
+          <Button text="Apply" width="100%" onClick={handleApply} />
+        </div>
       </div>
     </div>
   );

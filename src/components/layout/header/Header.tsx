@@ -21,11 +21,11 @@ const Header = ({ onSearch = () => {} }: HeaderProps) => {
         onClick={goToHome}
         style={{ cursor: "pointer", opacity: 0.8 }}
       >
-        <img src={Logo} alt="logo" width={50} />
+        <img src={Logo} alt="logo" width="100%" />
       </div>
       <SearchBar width="640px" onSearch={onSearch} />
       <div className={styles.profile}>
-        <FaCircleUser size={50} opacity={0.6} />
+        <FaCircleUser opacity={0.6} />
       </div>
     </header>
   );

@@ -113,7 +113,8 @@ const GameCardsPaginate = ({
             breakLabel="..."
             nextLabel=">"
             onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={1}
             pageCount={totalPages}
             previousLabel="<"
             renderOnZeroPageCount={null}
@@ -122,6 +123,7 @@ const GameCardsPaginate = ({
             pageLinkClassName={styles.number}
             nextLinkClassName={styles.arrow}
             activeLinkClassName={styles.active}
+            disabledClassName={styles.disabled}
           />
         </div>
       )}
