@@ -91,3 +91,23 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .game-page-container {
+    flex-direction: column-reverse;
+    gap: 20px;
+
+    .left {
+      padding-right: 0;
+      .banner-container {
+        height: 200px;
+      }
+    }
+
+    .right {
+      padding: 16px;
+      top: 0;
+      position: relative;
+    }
+  }
+}
