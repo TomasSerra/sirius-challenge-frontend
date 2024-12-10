@@ -6,7 +6,7 @@ import Dropdown from "@/components/ui/dropdown/Dropdown";
 import { CiFilter } from "react-icons/ci";
 import { getGameCardsInfo } from "@/utils/DataMapper";
 import { GameCardInfo } from "@/types/gameCardInfo";
-import { OrderByOptions } from "@/types/orderByOptions";
+import { OrderByOptions } from "@/types/ordering";
 import Filters from "@/components/utils/filters/Filters";
 import { useFilters } from "@/contexts/filters/FiltersContext";
 import { GameFilters } from "@/types/filters";
