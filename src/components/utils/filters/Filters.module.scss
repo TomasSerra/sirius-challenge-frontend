@@ -15,7 +15,7 @@
   .box {
     width: 80vw;
     max-width: 900px;
-    background-color: rgb(41, 41, 41);
+    background-color: colors.$neutral-700;
     padding: 30px;
     border-radius: 20px;
     max-height: 80dvh;
@@ -25,6 +25,7 @@
     flex-direction: column;
     gap: 40px;
     position: relative;
+    box-sizing: border-box;
 
     .error {
       color: rgb(223, 74, 74);
@@ -71,6 +72,7 @@
 
       .group {
         width: minmax(400px, 100%);
+        max-width: 100%;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -89,6 +91,45 @@
             border: none;
             color: white;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    .box {
+      width: 90vw;
+      max-height: 90dvh;
+      padding: 15px;
+
+      .apply-button {
+        position: sticky;
+        bottom: -15px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: colors.$neutral-700;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        border: none;
+        margin: 0;
+        background-clip: padding-box;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filters-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .group {
+          width: 100%;
         }
       }
     }

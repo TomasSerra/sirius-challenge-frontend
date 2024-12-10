@@ -3,19 +3,45 @@ import styles from "./Home.module.scss";
 import BannerCarousel from "@/components/ui/banner/carousel/BannerCarousel";
 import GameCardsPaginate from "@/components/layout/paginate/GameCardsPaginate";
 import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { GenreInfo } from "@/types/genresInfo";
+import { getGenres } from "@/utils/DataMapper";
 
 const Home = () => {
   const { genre } = useParams();
-  const genreName = genre
-    ? genre.replace(/-/g, " ").charAt(0).toUpperCase() +
-      genre.replace(/-/g, " ").slice(1)
-    : "";
+  const [genres, setGenres] = useState<GenreInfo[]>([]);
+  const [loadingGenres, setLoadingGenres] = useState(true);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
 
+  const getGenreName = (): string => {
+    return genre
+      ? genre.replace(/-/g, " ").charAt(0).toUpperCase() +
+          genre.replace(/-/g, " ").slice(1)
+      : "";
+  };
+
+  const genreName = getGenreName();
+
+  const fetchGenres = async () => {
+    getGenres()
+      .then((response) => {
+        setGenres(response);
+        setLoadingGenres(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching genres:", error);
+        setLoadingGenres(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchGenres();
+  }, []);
+
   return (
     <>
-      <Sidebar />
+      <Sidebar genres={genres} loading={loadingGenres} />
       <div className={styles["home-container"]}>
         {!genre && !query && (
           <section>
@@ -30,7 +56,7 @@ const Home = () => {
           ) : (
             <h1>All Games</h1>
           )}
-          <GameCardsPaginate genre={genre} search={query} />
+          <GameCardsPaginate genres={genres} genre={genre} search={query} />
         </section>
       </div>
     </>

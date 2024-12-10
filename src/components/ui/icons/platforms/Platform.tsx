@@ -1,23 +1,29 @@
 import React from "react";
-import XboxIcon from "@/assets/icons/platforms/Xbox";
-import PlaystationIcon from "@/assets/icons/platforms/PS";
-import NintendoIcon from "@/assets/icons/platforms/Nintendo";
-import Pc from "@/assets/icons/platforms/PC";
-import AppleIcon from "@/assets/icons/platforms/Apple";
+import { ImWindows8 } from "react-icons/im";
+import { FaPlaystation } from "react-icons/fa";
+import { FaXbox } from "react-icons/fa";
+import { BsApple } from "react-icons/bs";
+import { IoLogoAppleAppstore } from "react-icons/io5";
+import { VscTerminalLinux } from "react-icons/vsc";
+import { GrAndroid } from "react-icons/gr";
+import { BsNintendoSwitch } from "react-icons/bs";
+import { Platform } from "@/types/platforms";
 
 type PlatformIconProps = {
-  icon: string;
+  icon: Platform;
   color?: string;
 };
 
 const PlatformIcon = ({ icon, color = "white" }: PlatformIconProps) => {
-  const iconMap: Record<string, React.ReactNode> = {
-    xbox: <XboxIcon color={color} />,
-    playstation: <PlaystationIcon color={color} />,
-    nintendo: <NintendoIcon color={color} />,
-    pc: <Pc color={color} />,
-    ios: <AppleIcon color={color} />,
-    mac: <AppleIcon color={color} />,
+  const iconMap: Record<Platform, React.ReactNode> = {
+    xbox: <FaXbox color={color} />,
+    playstation: <FaPlaystation color={color} size={18} />,
+    nintendo: <BsNintendoSwitch color={color} />,
+    pc: <ImWindows8 color={color} />,
+    ios: <IoLogoAppleAppstore color={color} />,
+    mac: <BsApple color={color} />,
+    linux: <VscTerminalLinux color={color} />,
+    android: <GrAndroid color={color} />,
   };
 
   return <div>{iconMap[icon] || <></>}</div>;

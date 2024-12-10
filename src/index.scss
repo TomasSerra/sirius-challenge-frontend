@@ -1,7 +1,10 @@
 @use "colors.scss";
 
 :root {
-  font-family: Inter;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+
   color: colors.$text-color;
   background-color: colors.$background-color;
 
@@ -50,4 +53,12 @@ h3 {
 p {
   line-height: 20px;
   margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
