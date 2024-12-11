@@ -3,7 +3,7 @@ import styles from "./Filters.module.scss";
 import CheckersList from "./checkers/CheckersList";
 import { IoClose } from "react-icons/io5";
 import { GameFilters } from "@/types/filters";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GenreInfo } from "@/types/genresInfo";
 
 const platforms: { id: string; name: string }[] = [
