@@ -26,10 +26,9 @@ const PlatformsList = ({ platforms, loading = false }: PlatformsListProps) => {
         </>
       ) : (
         <>
-          <Skeleton width={20} height={20} circle={true} />
-          <Skeleton width={20} height={20} circle={true} />
-          <Skeleton width={20} height={20} circle={true} />
-          <Skeleton width={20} height={20} circle={true} />
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton key={index} width={20} height={20} circle={true} />
+          ))}
         </>
       )}
     </div>

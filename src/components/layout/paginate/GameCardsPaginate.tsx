@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
 import styles from "./GameCardsPaginate.module.scss";
-import Button from "@/components/ui/button/Button";
-import Dropdown from "@/components/ui/dropdown/Dropdown";
-import { CiFilter } from "react-icons/ci";
 import { getGameCardsInfo } from "@/utils/DataMapper";
 import { GameCardInfo } from "@/types/gameCardInfo";
-import { OrderByOptions } from "@/types/ordering";
-import Filters from "@/components/utils/filters/Filters";
 import { useFilters } from "@/contexts/filters/FiltersContext";
 import { GameFilters } from "@/types/filters";
 import { GenreInfo } from "@/types/genresInfo";
 import GameCards from "./cards/GameCards";
+import Filters from "./filters/Filters";
+import FiltersSelector from "@/components/utils/filters/Filters";
+import Paginator from "@/components/utils/paginator/Paginator";
 
 type GameCardsPaginateProps = {
   genre?: string | undefined;
@@ -24,15 +21,31 @@ const GameCardsPaginate = ({
   genres,
   search,
 }: GameCardsPaginateProps) => {
-  const gamesPerPage = 20;
   const [loadingCards, setLoadingCards] = useState(false);
+  // Filters management
   const filtersContext = useFilters();
   const filters: GameFilters = filtersContext ? filtersContext.filters : {};
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const setFilters = filtersContext ? filtersContext.setFilters : () => {};
+
+  // Pages management
+  const gamesPerPage = 20;
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGames, setCurrentGames] = useState<GameCardInfo[]>([]);
-  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    fetchGames(currentPage);
+  }, [filters]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setFilters({
+      ...filters,
+      genres: genre?.toLowerCase().replace(/\s+/g, "-"),
+      search: search,
+    });
+  }, [genre, search]);
 
   const handlePageClick = (event: { selected: number }) => {
     const newPage: number = event.selected + 1;
@@ -54,23 +67,10 @@ const GameCardsPaginate = ({
       });
   };
 
-  useEffect(() => {
-    fetchGames(currentPage);
-  }, [filters]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-    setFilters({
-      ...filters,
-      genres: genre?.toLowerCase().replace(/\s+/g, "-"),
-      search: search,
-    });
-  }, [genre, search]);
-
   return (
     <div>
       {filtersOpen && (
-        <Filters
+        <FiltersSelector
           close={() => {
             setFiltersOpen(false);
           }}
@@ -83,24 +83,11 @@ const GameCardsPaginate = ({
           genres={genres}
         />
       )}
-      <div className={styles["filter-buttons-container"]}>
-        <Dropdown
-          options={OrderByOptions}
-          initialValue={filters.ordering}
-          onChange={(values) => {
-            setFilters({ ...filters, ordering: values[0].value });
-          }}
-        />
-        <Button
-          text="Filter"
-          width="100px"
-          isFilled={false}
-          icon={<CiFilter />}
-          onClick={() => {
-            setFiltersOpen(true);
-          }}
-        />
-      </div>
+      <Filters
+        filters={filters}
+        setFilters={setFilters}
+        setFiltersOpen={setFiltersOpen}
+      />
       <div className={styles["games-container"]}>
         <GameCards
           games={currentGames}
@@ -109,25 +96,11 @@ const GameCardsPaginate = ({
         />
       </div>
       {currentGames.length > 0 && (
-        <div className={styles["pagination-container"]}>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel=">"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={3}
-            marginPagesDisplayed={1}
-            pageCount={totalPages}
-            forcePage={currentPage - 1}
-            previousLabel="<"
-            renderOnZeroPageCount={null}
-            containerClassName={styles.pagination}
-            previousLinkClassName={styles.arrow}
-            pageLinkClassName={styles.number}
-            nextLinkClassName={styles.arrow}
-            activeLinkClassName={styles.active}
-            disabledClassName={styles.disabled}
-          />
-        </div>
+        <Paginator
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handlePageClick={handlePageClick}
+        />
       )}
     </div>
   );

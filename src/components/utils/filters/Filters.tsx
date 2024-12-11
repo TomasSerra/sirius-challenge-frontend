@@ -26,14 +26,19 @@ const tags: { id: string; name: string }[] = [
   { id: "free", name: "Free" },
 ];
 
-type FiltersProps = {
+type FFiltersSelectorProps = {
   close: () => void;
   onApply: (filters?: GameFilters) => void;
   initialFilters?: GameFilters;
   genres?: GenreInfo[];
 };
 
-const Filters = ({ close, onApply, initialFilters, genres }: FiltersProps) => {
+const FiltersSelector = ({
+  close,
+  onApply,
+  initialFilters,
+  genres,
+}: FFiltersSelectorProps) => {
   const [checkedProps, setCheckedProps] = useState<GameFilters>(
     initialFilters || {}
   );
@@ -181,11 +186,11 @@ const Filters = ({ close, onApply, initialFilters, genres }: FiltersProps) => {
           <span className={styles.error}>{applyError}</span>
         )}
         <div className={styles["apply-button"]}>
-          <Button text="Apply" width="100%" onClick={handleApply} />
+          <Button text="Apply Filters" width="100%" onClick={handleApply} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Filters;
+export default FiltersSelector;

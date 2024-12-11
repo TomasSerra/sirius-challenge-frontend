@@ -1,6 +1,6 @@
 import Rating from "@/components/utils/rating/Rating";
 import styles from "./GameCard.module.scss";
-import PlatformsList from "../../icons/platforms/PlatformsList";
+import PlatformsList from "../../../utils/platforms/PlatformsList";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Platform } from "@/types/platforms";
@@ -41,23 +41,22 @@ const GameCard = ({
     navigate(`/game/${id}`);
   };
 
-  const handleWebsiteClick = async (e: any) => {
-    e.stopPropagation();
-    setLoadingWebsite(true);
-    getGameInfo(id)
-      .then((response) => {
-        if (response.data.website) {
-          window.open(response.data.website, "_blank");
-        }
-        setLoadingWebsite(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching game website:", error);
-        setLoadingWebsite(false);
-      });
-  };
-
   const WebsiteButton = () => {
+    const handleWebsiteClick = async (e: any) => {
+      e.stopPropagation();
+      setLoadingWebsite(true);
+      getGameInfo(id)
+        .then((response) => {
+          if (response.data.website) {
+            window.open(response.data.website, "_blank");
+          }
+          setLoadingWebsite(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching game website:", error);
+          setLoadingWebsite(false);
+        });
+    };
     return (
       <>
         <div
@@ -71,17 +70,7 @@ const GameCard = ({
           {!loadingWebsite ? (
             <TbBrowserShare size={25} />
           ) : (
-            <span
-              style={{
-                width: "25px",
-                height: "25px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <BeatLoader color="#ffffff" size={3} />
-            </span>
+            <BeatLoader color="#ffffff" size={3} />
           )}
         </div>
         <Tooltip id={"website-tooltip-" + id} />
@@ -118,7 +107,11 @@ const GameCard = ({
           )}
         </div>
         <p className={styles.date}>
-          <b>Release Date:</b> {releaseDate}
+          {releaseDate && (
+            <>
+              <b>Release Date:</b> {releaseDate}
+            </>
+          )}
         </p>
       </div>
     </div>
