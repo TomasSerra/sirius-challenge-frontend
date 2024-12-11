@@ -26,7 +26,7 @@ const tags: { id: string; name: string }[] = [
   { id: "free", name: "Free" },
 ];
 
-type FFiltersSelectorProps = {
+type FiltersSelectorProps = {
   close: () => void;
   onApply: (filters?: GameFilters) => void;
   initialFilters?: GameFilters;
@@ -38,7 +38,7 @@ const FiltersSelector = ({
   onApply,
   initialFilters,
   genres,
-}: FFiltersSelectorProps) => {
+}: FiltersSelectorProps) => {
   const [checkedProps, setCheckedProps] = useState<GameFilters>(
     initialFilters || {}
   );
