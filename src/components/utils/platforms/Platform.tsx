@@ -14,19 +14,23 @@ type PlatformIconProps = {
   color?: string;
 };
 
-const PlatformIcon = ({ icon, color = "white" }: PlatformIconProps) => {
-  const iconMap: Record<Platform, React.ReactNode> = {
-    xbox: <FaXbox color={color} />,
-    playstation: <FaPlaystation color={color} size={18} />,
-    nintendo: <BsNintendoSwitch color={color} />,
-    pc: <ImWindows8 color={color} />,
-    ios: <IoLogoAppleAppstore color={color} />,
-    mac: <BsApple color={color} />,
-    linux: <VscTerminalLinux color={color} />,
-    android: <GrAndroid color={color} />,
-  };
+const ICON_MAP: Record<Platform, React.ElementType> = {
+  xbox: FaXbox,
+  playstation: FaPlaystation,
+  nintendo: BsNintendoSwitch,
+  pc: ImWindows8,
+  ios: IoLogoAppleAppstore,
+  mac: BsApple,
+  linux: VscTerminalLinux,
+  android: GrAndroid,
+};
 
-  return <div>{iconMap[icon] || <></>}</div>;
+const PlatformIcon: React.FC<PlatformIconProps> = ({
+  icon,
+  color = "white",
+}) => {
+  const IconComponent = ICON_MAP[icon];
+  return IconComponent ? <IconComponent color={color} /> : null;
 };
 
 export default PlatformIcon;

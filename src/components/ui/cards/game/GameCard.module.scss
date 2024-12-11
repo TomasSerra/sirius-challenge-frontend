@@ -60,6 +60,12 @@
       align-items: center;
       background-color: rgba(0, 0, 0, 0.438);
       border-radius: 50%;
+      width: 25px;
+      height: 25px;
+
+      span {
+        display: inline-block !important;
+      }
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.7);
@@ -102,5 +108,11 @@
     .date {
       margin: 0;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .game-card {
+    width: 100%;
   }
 }

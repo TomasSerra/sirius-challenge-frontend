@@ -3,7 +3,7 @@ import styles from "./GamePage.module.scss";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import PlatformsList from "@/components/ui/icons/platforms/PlatformsList";
+import PlatformsList from "@/components/utils/platforms/PlatformsList";
 import Metrics from "@/components/utils/metrics/Metrics";
 import GameDetail from "@/components/utils/gameinfo/details/GameDetail";
 import GameDetailSection from "@/components/utils/gameinfo/section/GameDetailSection";
@@ -55,6 +55,7 @@ const GamePage = () => {
         <GameDetailsSection gameData={gameData} loading={loading} />
       </div>
       <div className={styles.right}>
+        <BackArrow className={styles["mobile-back-button"]} />
         <GameName name={gameData?.name} loading={loading} />
         <PlatformsList platforms={gameData?.platforms} loading={loading} />
         <Metrics
@@ -70,22 +71,21 @@ const GamePage = () => {
 };
 export default GamePage;
 
-const Banner = ({ gameData }: { gameData?: GamePageInfo }) => {
+const BackArrow = ({ className = "" }: { className?: string }) => {
   const navigate = useNavigate();
+  return (
+    <span
+      className={className}
+      onClick={() => {
+        navigate(-1);
+      }}
+    >
+      <IoIosArrowBack size={30} />
+    </span>
+  );
+};
 
-  const BackArrow = () => {
-    return (
-      <span
-        className={styles["back-arrow"]}
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        <IoIosArrowBack size={30} />
-      </span>
-    );
-  };
-
+const Banner = ({ gameData }: { gameData?: GamePageInfo }) => {
   return (
     <div className={styles["banner-container"]}>
       <div
@@ -96,7 +96,7 @@ const Banner = ({ gameData }: { gameData?: GamePageInfo }) => {
             : undefined,
         }}
       >
-        <BackArrow />
+        <BackArrow className={styles["back-button"]} />
       </div>
     </div>
   );

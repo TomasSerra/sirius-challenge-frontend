@@ -1,7 +1,7 @@
 import styles from "./Banner.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import PlatformsList from "@/components/ui/icons/platforms/PlatformsList";
+import PlatformsList from "@/components/utils/platforms/PlatformsList";
 import { Platform } from "@/types/platforms";
 import Button from "../button/Button";
 import { useNavigate } from "react-router-dom";
