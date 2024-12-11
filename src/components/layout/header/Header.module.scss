@@ -23,7 +23,18 @@
   }
 
   .logo {
-    width: 50px;
+    width: fit-content;
+    cursor: pointer;
+    opacity: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      width: 50px;
+    }
   }
 }
 
@@ -39,6 +50,7 @@
 
     .logo {
       width: 30px;
+      font-size: 0;
       img {
         width: 30px;
       }

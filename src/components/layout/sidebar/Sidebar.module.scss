@@ -3,7 +3,7 @@
 .sidebar-container {
   background-color: colors.$neutral-800;
   width: 260px;
-  height: 80dvh;
+  height: 70dvh;
   border-radius: 20px;
   padding: 26px 30px;
   box-sizing: border-box;
@@ -44,5 +44,11 @@
 @media screen and (max-width: 768px) {
   .sidebar-container {
     display: none;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .sidebar-container {
+    height: 70dvh;
   }
 }
