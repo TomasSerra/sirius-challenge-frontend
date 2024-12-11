@@ -42,7 +42,7 @@ const GameCardsPaginate = ({
     setCurrentPage(1);
     setFilters({
       ...filters,
-      genres: genre?.toLowerCase().replace(/\s+/g, "-"),
+      genres: genre?.toLowerCase().replace(/\s+/g, "-") || filters.genres || "",
       search: search,
     });
   }, [genre, search]);

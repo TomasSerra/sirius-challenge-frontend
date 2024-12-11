@@ -1,4 +1,4 @@
-import PlatformIcon from "./Platform";
+import PlatformIcon from "./PlatformIcon";
 import { Platform } from "@/types/platforms";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";

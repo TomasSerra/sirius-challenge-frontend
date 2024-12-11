@@ -16,12 +16,9 @@ const Header = ({ onSearch = () => {} }: HeaderProps) => {
   };
   return (
     <header className={styles.header}>
-      <div
-        className={styles.logo}
-        onClick={goToHome}
-        style={{ cursor: "pointer", opacity: 0.8 }}
-      >
+      <div className={styles.logo} onClick={goToHome}>
         <img src={Logo} alt="logo" width="100%" />
+        Info Games
       </div>
       <SearchBar width="640px" onSearch={onSearch} />
       <div className={styles.profile}>
